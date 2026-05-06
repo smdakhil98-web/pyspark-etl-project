@@ -1,0 +1,6 @@
+sale_id,product_id,customer_id,sales_amount
+1,P101,C101,500
+2,P102,C102,300
+3,P101,C103,250
+4,P103,C104,
+5,P101,C101,500
