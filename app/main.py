@@ -1,14 +1,15 @@
 import logging
+
 from ingestion import get_spark, read_data
-from validation import validate_data
 from transformation import transform_data
+from validation import validate_data
 from config import load_config
 
 
-# Step 1: Setup logging
+# Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s"
+    format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
 
@@ -31,18 +32,15 @@ def run_pipeline():
     logging.info("Data validation completed")
 
     # Transform data
-    result = transform_data(df)
+    df = transform_data(df)
     logging.info("Data transformation completed")
 
-    # Show result
-    result.show()
+    # Write output
+    df.write.mode("overwrite").csv(config["output_path"], header=True)
+    logging.info("Data written successfully")
 
-    logging.info("Pipeline finished successfully")
+    logging.info("Pipeline completed successfully")
 
 
-# Step 2: Add error handling
 if __name__ == "__main__":
-    try:
-        run_pipeline()
-    except Exception as e:
-        logging.error(f"Pipeline failed: {str(e)}")
+    run_pipeline()

@@ -1,6 +1,5 @@
-import yaml
-
 def load_config():
-    with open("config/config.yaml", "r") as file:
-        config = yaml.safe_load(file)
-    return config
+    return {
+        "input_path": "gs://etl-pyspark-bucket/data/input.csv",
+        "output_path": "gs://etl-pyspark-bucket/output/"
+    }
