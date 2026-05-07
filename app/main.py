@@ -40,7 +40,7 @@ def run_pipeline():
     logging.info("Data written successfully")
 
     logging.info("Pipeline completed successfully")
-
+# test trigger
 
 if __name__ == "__main__":
     run_pipeline()
