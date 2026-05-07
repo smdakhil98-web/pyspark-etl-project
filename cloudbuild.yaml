@@ -1,10 +1,12 @@
 steps:
-# Step 1: Zip the app folder
-- name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: 'bash'
+# Step 1: Install zip and create archive
+- name: 'ubuntu'
+  entrypoint: bash
   args:
-    - '-c'
+    - -c
     - |
+      apt-get update
+      apt-get install -y zip
       zip -r code.zip app/
 
 # Step 2: Upload to GCS
