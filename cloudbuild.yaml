@@ -1,5 +1,5 @@
 steps:
-# 1) Zip your app
+# Zip
 - name: 'ubuntu'
   entrypoint: bash
   args:
@@ -8,14 +8,21 @@ steps:
       apt-get update && apt-get install -y zip
       zip -r code.zip app/
 
-# 2) Upload to GCS
+# Upload zip
 - name: 'gcr.io/cloud-builders/gsutil'
   args:
     - cp
     - code.zip
     - gs://etl-pyspark-bucket/code.zip
 
-# 3) Submit Dataproc job 🚀
+# 🔥 Upload main.py (NEW)
+- name: 'gcr.io/cloud-builders/gsutil'
+  args:
+    - cp
+    - app/main.py
+    - gs://etl-pyspark-bucket/main.py
+
+# Run job
 - name: 'gcr.io/cloud-builders/gcloud'
   args:
     - dataproc
@@ -23,8 +30,8 @@ steps:
     - submit
     - pyspark
     - gs://etl-pyspark-bucket/main.py
-    - --cluster=pyspark-cluster          # 🔁 change to your cluster name
-    - --region=us-east1                 # 🔁 your region
+    - --cluster=pyspark-cluster
+    - --region=us-east1
     - --py-files=gs://etl-pyspark-bucket/code.zip
 
 options:
